@@ -1,0 +1,3 @@
+django
+boto3
+python-ffmpeg
