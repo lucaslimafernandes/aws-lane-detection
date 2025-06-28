@@ -11,6 +11,8 @@ class VideoUpload(models.Model):
     duration     = models.FloatField(help_text="Duration in seconds")
     frame_rate   = models.FloatField()
     total_frames = models.IntegerField()
+    width        = models.IntegerField()
+    height       = models.IntegerField()
     created_at   = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
