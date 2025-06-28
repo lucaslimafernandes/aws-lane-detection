@@ -1,5 +1,10 @@
 Passos.txt
 
+*.mp4
+*.mov
+
+migrations/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

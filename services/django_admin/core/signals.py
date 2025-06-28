@@ -1,13 +1,13 @@
 import os
 import json
 
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from .models import VideoUpload
 
 from ffmpeg import FFmpeg
 
-@receiver(pre_save, sender=VideoUpload)
+@receiver(post_save, sender=VideoUpload)
 def video_info(sender, instance, **kwargs):
 
     if instance.file and not instance.duration:
