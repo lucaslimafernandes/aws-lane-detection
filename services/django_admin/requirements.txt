@@ -2,3 +2,5 @@ django
 boto3
 python-ffmpeg
 python-dotenv
+django-storages
+psycopg2-binary
