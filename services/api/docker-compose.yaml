@@ -1,0 +1,14 @@
+services:
+
+  api:
+    build:
+      context: .
+    container_name: api-ec2-simulate
+    ports:
+      - "8080:8080"
+    networks:
+      - localstack-net
+
+networks:
+  localstack-net:
+    external: true
