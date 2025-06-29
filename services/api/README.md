@@ -14,7 +14,7 @@ Autor: Lucas Lima Fernandes
 
 ## Executando
 
-### 1. Suba o LocalStack manualmente (fora do Compose)
+### 1. Suba o LocalStack manualmente
 
 ```bash
 docker network create localstack-net
