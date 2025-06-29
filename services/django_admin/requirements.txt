@@ -1,7 +1,0 @@
-django
-boto3
-python-ffmpeg
-python-dotenv
-django-storages
-django-storages[s3]
-psycopg2-binary
