@@ -1,7 +1,16 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
-from aws_utils import list_buckets, upload_file_to_bucket
+from aws_utils import (
+    list_buckets, 
+    upload_file_to_bucket,
+    send_message_to_queue
+)
 
-from settings import EXT_FILES
+from settings import (
+    EXT_FILES,
+    BUCKET_NAME, 
+    ENDPOINT_URL,
+)
+
 
 app = FastAPI()
 
@@ -16,8 +25,8 @@ def get_buckets():
     buckets = list_buckets()
     return {"buckets": [b["Name"] for b in buckets]}
 
-@app.post("/upload/{bucket_name}")
-async def upload_video(bucket_name: str, file: UploadFile = File(...)):
+@app.post("/upload/")
+async def upload_video(file: UploadFile = File(...)):
 
     if not file.filename.lower().endswith(EXT_FILES):
         raise HTTPException(
@@ -26,7 +35,6 @@ async def upload_video(bucket_name: str, file: UploadFile = File(...)):
         )
 
     success = upload_file_to_bucket(
-        bucket_name=bucket_name, 
         file_obj=file.file, 
         filename=file.filename
     )
@@ -36,6 +44,19 @@ async def upload_video(bucket_name: str, file: UploadFile = File(...)):
             detail="error: erro uploading."
         )
     
-    return {"message": f"{file.filename} uploaded to bucket {bucket_name} successfully."}
+    object_url = f"{ENDPOINT_URL}/{BUCKET_NAME}/{file.filename}"
+
+    msg = {
+        "bucket": BUCKET_NAME,
+        "filename": file.filename,
+        "url": object_url,
+        "event": "UPLOAD_VIDEO"
+    }
+    send_message_to_queue(msg)
+    
+    return {
+        "message": f"{file.filename} uploaded successfully.",
+        "s3_url": object_url,
+    }
 
 
