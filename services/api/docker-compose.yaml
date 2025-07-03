@@ -3,7 +3,7 @@ services:
   api:
     build:
       context: .
-    container_name: api-ec2-simulate
+    container_name: api-ec2-simulate-test
     ports:
       - "8080:8080"
     networks:

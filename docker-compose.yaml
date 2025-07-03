@@ -1,0 +1,21 @@
+services:
+
+  api:
+    build:
+      context: services/api/
+    container_name: api-ec2-simulate
+    ports:
+      - "8080:8080"
+    networks:
+      - localstack-net
+
+  processor:
+    build:
+      context: services/video_processor/
+    container_name: processor
+    networks:
+      - localstack-net
+
+networks:
+  localstack-net:
+    external: true
