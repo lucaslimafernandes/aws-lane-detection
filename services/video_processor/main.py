@@ -402,6 +402,8 @@ def lambda_handler(event, context):
             # out_mask.write(cv2.cvtColor(masked_edges, cv2.COLOR_GRAY2BGR))
             # out_canny.write(frame_linhas)
             # out_final.write(frame_final)
+
+            frame_count += 1
         
         ######################
         ######################

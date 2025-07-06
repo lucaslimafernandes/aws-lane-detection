@@ -37,11 +37,11 @@ docker network create localstack-net
 docker run -d \
   --name localstack-main \
   --network localstack-net \
-  -p 4566:4566 \
-  -e SERVICES=s3,sqs \
-  -e DEBUG=1 \
+  -p 127.0.0.1:4566:4566 -p 127.0.0.1:4510-4559:4510-4559 \
+  -v /var/run/docker.sock:/var/run/docker.sock localstack/localstack \
   localstack/localstack
 ```
+
 
 > Alternativamente, você pode usar a interface web gratuita em https://app.localstack.cloud para criar os recursos S3 e SQS.
 
