@@ -2,17 +2,32 @@
 
 Aplicação de detecção de faixas em vídeos com processamento em Python, uso de filas (SQS) e armazenamento (S3), utilizando AWS emulada via LocalStack.
 
+Monorepo contém múltiplos serviços integrados para detecção de faixas em vídeos e envio de notificações automatizadas via SNS/Telegram.
+
 Autor: Lucas Lima Fernandes
 
 ---
 
 ## Componentes do Projeto
 
-```
-services/
-├── api             # API REST (FastAPI) para upload de vídeos e envio para SQS
-└── video_processor # Serviço que processa vídeos da fila e salva resultados no S3
-```
+## Estrutura do Projeto
+
+```plaintext
+├── create_services.sh
+├── docker-compose.yaml
+├── LICENSE
+├── Passos.txt
+├── README.md  # ← você está aqui
+├── services
+│   ├── api
+│   │   └── ... (envio de vídeos para processamento)
+│   ├── notifier
+│   │   └── ... (notificação via Telegram)
+│   └── video_processor
+│       └── ... (processamento de vídeo com OpenCV)
+└── testes
+    └── vídeos de exemplo
+
 
 ---
 
@@ -60,7 +75,10 @@ Crie o bucket e a fila:
 ```bash
 awslocal s3 mb s3://lane-bucket
 awslocal sqs create-queue --queue-name future-processing
+awslocal sns create-topic --name alertas
 ```
+
+Adicione o script `create_services.sh`
 
 ---
 
@@ -71,7 +89,13 @@ Copie os arquivos `.env` de exemplo:
 ```bash
 cp services/api/example.env services/api/.env
 cp services/video_processor/example.env services/video_processor/.env
+cp services/notifier/example.env services/notifier/.env
 ```
+
+Necessário configurar para API do Telegram, Utilizando os links abaixo
+
+- https://t.me/userinfobot
+- https://t.me/BotFather
 
 > Preencha as variáveis conforme necessário. Em geral, os valores padrão já funcionam com o LocalStack.
 
@@ -108,3 +132,11 @@ Recomendo cortar os vídeos em pedaços de 10 segundos para teste.
 ## Licença
 
 MIT
+
+## Autor
+
+**Lucas Lima Fernandes**  
+📍 Porto Alegre, RS  
+✉️ lucas.lfernandes@live.com  
+🔗 [GitHub](https://github.com/lucaslimafernandes)
+🔗 [LinkedIn](https://www.linkedin.com/in/lucaslimafernandes/)
