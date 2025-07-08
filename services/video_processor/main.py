@@ -18,12 +18,15 @@ load_dotenv()
 ENDPOINT_URL = os.getenv("AWS_ENDPOINT_URL", None)
 QUEUE_NAME   = os.getenv("SQS_QUEUE_NAME", "queue1")
 QUEUE_URL    = f"{ENDPOINT_URL}/000000000000/{QUEUE_NAME}"
-REGION_NAME  = os.getenv("AWS_REGION", "ue-east-1")
+REGION_NAME  = os.getenv("AWS_REGION", "us-east-1")
+TOPIC_ARN = os.getenv("SNS_TOPIC_ARN", "arn:aws:sns:us-east-1:000000000000:alertas")
+
 
 # sqs = boto3.client("sqs", endpoint_url=ENDPOINT_URL)  # ajuste se necessário
 # s3 = boto3.client('s3')
 
 sqs = boto3.client("sqs", endpoint_url=ENDPOINT_URL, region_name=REGION_NAME)
+sns = boto3.client("sns", endpoint_url=ENDPOINT_URL, region_name=REGION_NAME)
 s3  = boto3.client("s3", endpoint_url=ENDPOINT_URL, region_name=REGION_NAME)
 
 
@@ -414,6 +417,14 @@ def lambda_handler(event, context):
 
         shutil.rmtree(base_output)
         print("✅ Finalizado. Resultado em s3://{}/{}".format(bucket, output_s3_prefix))
+
+        # Envia notificação
+        msg = f"✅ Processamento concluído para `{filename}`. Resultado em s3://{bucket}/{output_s3_prefix}"
+        response = sns.publish(
+            TopicArn=TOPIC_ARN,
+            Message=msg,
+        )
+        print("📣 Notificação enviada via SNS:", response["MessageId"])
 
 
 def event_get():
