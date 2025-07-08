@@ -21,7 +21,6 @@ QUEUE_URL    = f"{ENDPOINT_URL}/000000000000/{QUEUE_NAME}"
 REGION_NAME  = os.getenv("AWS_REGION", "us-east-1")
 TOPIC_ARN = os.getenv("SNS_TOPIC_ARN", "arn:aws:sns:us-east-1:000000000000:alertas")
 
-
 # sqs = boto3.client("sqs", endpoint_url=ENDPOINT_URL)  # ajuste se necessário
 # s3 = boto3.client('s3')
 

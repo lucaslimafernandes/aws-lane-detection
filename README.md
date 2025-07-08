@@ -4,7 +4,6 @@ Aplicação de detecção de faixas em vídeos com processamento em Python, uso 
 
 Monorepo contém múltiplos serviços integrados para detecção de faixas em vídeos e envio de notificações automatizadas via SNS/Telegram.
 
-
 Autor: Lucas Lima Fernandes
 
 ---
@@ -28,7 +27,7 @@ Autor: Lucas Lima Fernandes
 │       └── ... (processamento de vídeo com OpenCV)
 └── testes
     └── vídeos de exemplo
-```
+
 
 ---
 
